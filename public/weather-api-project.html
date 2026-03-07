@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/favicon.png" type="image/png">
+    <title>Weather API Business Automation - Devon Clemente</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .back-button {
+            position: fixed;
+            top: 24px;
+            left: 24px;
+            z-index: 50;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(8px);
+            padding: 8px 16px;
+            border-radius: 6px;
+            text-decoration: none;
+            color: #333;
+            font-size: 14px;
+            font-weight: 500;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.2s;
+        }
+        
+        .back-button:hover {
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            transform: translateY(-1px);
+        }
+        
+        .hero {
+            background: linear-gradient(135deg, hsl(217, 91%, 35%) 0%, hsl(200, 90%, 65%) 100%);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+            margin-bottom: 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.2);
+        }
+        
+        .hero .hero-content {
+            position: relative;
+            z-index: 10;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        .hero .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+        
+        .hero .project-meta {
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+        
+        .section {
+            background: white;
+            margin-bottom: 30px;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border: 2px solid #87ceeb;
+        }
+        
+        .section h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #2c3e50;
+            border-bottom: 3px solid #87ceeb;
+            padding-bottom: 10px;
+        }
+        
+        .problem-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 20px;
+        }
+        
+        .problem-item {
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #e74c3c;
+        }
+        
+        .solution-list {
+            list-style: none;
+            margin-top: 20px;
+        }
+        
+        .solution-list li {
+            padding: 15px;
+            margin-bottom: 10px;
+            background: #e8f5e8;
+            border-radius: 8px;
+            border-left: 4px solid #27ae60;
+            position: relative;
+        }
+        
+        .solution-list li::before {
+            content: "✓";
+            color: #27ae60;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        
+        .workflow-diagram {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .workflow-step {
+            background: #fff;
+            border: 2px solid #87ceeb;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .workflow-step::after {
+            content: "→";
+            position: absolute;
+            right: -15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #87ceeb;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .workflow-step:last-child::after {
+            display: none;
+        }
+        
+        .workflow-step h3 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .tech-tag {
+            background: #87ceeb;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            -webkit-text-stroke: 0.5px rgba(0, 0, 0, 0.8);
+        }
+        
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 20px;
+        }
+        
+        .benefit-card {
+            background: #fff;
+            border: 2px solid #87ceeb;
+            border-radius: 10px;
+            padding: 25px;
+            text-align: center;
+        }
+        
+        .benefit-card h3 {
+            color: #27ae60;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+        
+        .improvements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 20px;
+        }
+        
+        .improvement-card {
+            background: #fff;
+            border: 2px solid #87ceeb;
+            border-radius: 10px;
+            padding: 25px;
+        }
+        
+        .improvement-card h3 {
+            color: #e67e22;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+        
+        .demo-section {
+            text-align: center;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 10px;
+            margin-top: 30px;
+        }
+        
+        .demo-button {
+            display: inline-block;
+            background: white;
+            color: #333;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 600;
+            margin: 10px;
+            transition: transform 0.3s ease;
+        }
+        
+        .demo-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .back-button {
+            background: #6c757d;
+            color: white;
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: 5px;
+            display: inline-block;
+            margin-bottom: 30px;
+            transition: background-color 0.3s ease;
+        }
+        
+        .back-button:hover {
+            background: #5a6268;
+        }
+        
+        @media (max-width: 768px) {
+            .problem-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .section {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="#" class="back-button">← Back to Portfolio</a>
+    
+    <div class="hero">
+        <div class="hero-content">
+            <h1>Automation of Weather-Based Sales and Staffing Decisions</h1>
+            <div class="subtitle">AI-Powered Business Operations for Miami Beach Coffee & Ice Cream Kiosk</div>
+            <div class="project-meta">Devon Clemente | AI Automation | Sprint 5 - Final Project</div>
+        </div>
+    </div>
+    
+    <div class="container">
+
+        <div class="section">
+            <h2>Problem</h2>
+            <p>The demo company operates a coffee and ice cream kiosk right by the beach in Miami, Florida. Weather in coastal cities changes quickly and directly impacts business operations.</p>
+            
+            <div class="problem-grid">
+                <div class="problem-item">
+                    <h3>Weather Impact on Sales</h3>
+                    <p>Hot and humid mornings bring surges in iced coffee and gelato sales, while windy days mean fewer beachgoers and more locals grabbing comfort food.</p>
+                </div>
+                
+                <div class="problem-item">
+                    <h3>Manual Process Inefficiency</h3>
+                    <p>The kiosk manager currently checks forecasts manually, then decides product and staffing plans. This manual checking wastes time and delays preparation.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Solution</h2>
+            <p>An automated workflow that transforms weather data into actionable business recommendations:</p>
+            
+            <ul class="solution-list">
+                <li>Fetches the daily forecast for Miami, FL at 7:00 AM automatically</li>
+                <li>Uses AI to interpret the forecast and generate intelligent recommendations</li>
+                <li>Provides product mix recommendations (hot drinks, cold drinks, gelato, pastries)</li>
+                <li>Suggests staffing adjustments based on weather conditions</li>
+                <li>Creates two short customer promo messages tailored to the weather</li>
+                <li>Emails the manager with a comprehensive summary every morning</li>
+            </ul>
+            
+            <div class="tech-stack">
+                <span class="tech-tag">Zapier</span>
+                <span class="tech-tag">Weather API</span>
+                <span class="tech-tag">Google AI Studio (Gemini)</span>
+                <span class="tech-tag">Gmail Integration</span>
+                <span class="tech-tag">Webhooks</span>
+                <span class="tech-tag">API Integration</span>
+                <span class="tech-tag">Postman</span>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Workflow Process</h2>
+            <div class="workflow-diagram">
+                <div class="workflow-step">
+                    <h3>1. Schedule Trigger</h3>
+                    <p>Every day at 7:00 AM<br>Zapier automation starts</p>
+                </div>
+                
+                <div class="workflow-step">
+                    <h3>2. Weather API Call</h3>
+                    <p>GET request via Webhooks<br>Fetch Miami weather data</p>
+                </div>
+                
+                <div class="workflow-step">
+                    <h3>3. AI Analysis</h3>
+                    <p>Google AI Studio (Gemini)<br>Process weather into business insights</p>
+                </div>
+                
+                <div class="workflow-step">
+                    <h3>4. Email Delivery</h3>
+                    <p>Gmail sends formatted report<br>Product, staffing, & promo recommendations</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Key Benefits</h2>
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <h3>Eliminates Daily Manual Tasks</h3>
+                    <p>Automates the time-consuming process of checking weather forecasts, analyzing conditions, and creating daily operational plans - saving managers 30+ minutes each morning.</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <h3>Transforms Weather Checking into Strategic Planning</h3>
+                    <p>Upgrades the manager's existing morning weather routine by automatically converting raw weather data into actionable business recommendations for inventory, staffing, and promotions.</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <h3>Consistent Operations Excellence</h3>
+                    <p>Ensures daily business adjustments are made systematically and delivered reliably at 7 AM, preventing missed opportunities due to weather changes or human oversight.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Future Improvements</h2>
+            <div class="improvements-grid">
+                <div class="improvement-card">
+                    <h3>Enhanced AI Prompt Engineering</h3>
+                    <p>Refine the prompt to include seasonal Miami tourism patterns and local event data for even more targeted business recommendations tailored to high-traffic periods.</p>
+                </div>
+                
+                <div class="improvement-card">
+                    <h3>Multi-Location Scalability</h3>
+                    <p>Expand the system to manage multiple kiosk locations simultaneously, with location-specific weather data and customized product portfolios for different demographic areas.</p>
+                </div>
+                
+                <div class="improvement-card">
+                    <h3>Real-Time Sales Integration</h3>
+                    <p>Connect the system to point-of-sale data to automatically adjust recommendations based on actual product performance, creating a feedback loop that continuously improves AI accuracy over time.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2>Project Demonstration</h2>
+            <p>Explore the technical implementation and see the automation in action</p>
+            <a href="#" class="demo-button">View Live Workflow</a>
+            <a href="#" class="demo-button">Technical Documentation</a>
+            <a href="#" class="demo-button">Download Project Files</a>
+        </div>
+    </div>
+</body>
+</html>

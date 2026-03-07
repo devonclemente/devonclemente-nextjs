@@ -1,26 +1,474 @@
-@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Righteous&family=Quicksand:wght@400;500;600;700&display=swap');
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+/* Professional Portfolio Design System for Devon Clemente */
 
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: 210 30% 98%;
+    --foreground: 215 25% 15%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 215 25% 15%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 215 25% 15%;
+
+    --primary: 200 90% 65%;
+    --primary-rgb: 87, 191, 230;
+    --primary-foreground: 0 0% 100%;
+    --primary-hover: 200 90% 60%;
+
+    --secondary: 210 15% 88%;
+    --secondary-foreground: 215 25% 25%;
+
+    --muted: 210 20% 94%;
+    --muted-foreground: 215 15% 50%;
+
+    --accent: 200 85% 60%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 210 20% 90%;
+    --input: 210 20% 90%;
+    --ring: 200 90% 65%;
+
+    /* Professional gradients */
+    --gradient-hero: linear-gradient(135deg, hsl(200 90% 65%), hsl(200 85% 60%));
+    --gradient-hero-animated: linear-gradient(135deg, hsl(217 91% 35%), hsl(200 90% 65%), hsl(210 22% 49%));
+    --gradient-subtle: linear-gradient(180deg, hsl(210 30% 98%), hsl(210 25% 95%));
+    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%), hsl(210 20% 98%));
+    
+    /* Professional shadows */
+    --shadow-soft: 0 4px 20px -2px hsl(210 20% 50% / 0.08);
+    --shadow-medium: 0 8px 30px -4px hsl(210 20% 50% / 0.12);
+    --shadow-strong: 0 16px 40px -8px hsl(210 20% 50% / 0.15);
+    --shadow-glow: 0 0 30px hsl(200 90% 65% / 0.3);
+
+    /* Light blue outline utility */
+    --outline-primary: 2px solid hsl(200 90% 65%);
+
+    /* Transitions */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-quick: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+
+    --radius: 0.5rem;
+
+    --sidebar-background: 0 0% 98%;
+
+    --sidebar-foreground: 240 5.3% 26.1%;
+
+    --sidebar-primary: 240 5.9% 10%;
+
+    --sidebar-primary-foreground: 0 0% 98%;
+
+    --sidebar-accent: 240 4.8% 95.9%;
+
+    --sidebar-accent-foreground: 240 5.9% 10%;
+
+    --sidebar-border: 220 13% 91%;
+
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  /* Text utilities with outlines for better readability */
+  .text-primary {
+    color: hsl(var(--primary));
+  }
+
+  /* Component outlines */
+  .outline-primary {
+    border: var(--outline-primary);
+  }
+}
+
+/* ================================================
+   GAME-SPECIFIC STYLES (Roddy's Star Track)
+   Scoped to .game-context to avoid affecting portfolio
+   ================================================ */
+
+.game-context {
+  /* Cosmic Space Theme - Game CSS Variables */
+  --background: 245 50% 8%;
+  --foreground: 45 100% 96%;
+
+  --card: 250 40% 12%;
+  --card-foreground: 45 100% 96%;
+
+  --popover: 250 40% 12%;
+  --popover-foreground: 45 100% 96%;
+
+  --primary: 35 100% 55%;
+  --primary-foreground: 250 50% 10%;
+
+  --secondary: 280 60% 35%;
+  --secondary-foreground: 45 100% 96%;
+
+  --muted: 250 30% 18%;
+  --muted-foreground: 45 30% 70%;
+
+  --accent: 280 70% 50%;
+  --accent-foreground: 45 100% 96%;
+
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 45 100% 96%;
+
+  --border: 250 30% 25%;
+  --input: 250 30% 20%;
+  --ring: 35 100% 55%;
+
+  --radius: 1rem;
+
+  /* Custom Game Colors */
+  --space-yellow: 45 100% 60%;
+  --space-orange: 25 100% 55%;
+  --space-purple: 280 60% 40%;
+  --space-deep: 250 60% 15%;
+  --player-red: 0 85% 55%;
+  --player-blue: 210 100% 55%;
+  --star-glow: 280 80% 60%;
+  --number-glow: 45 100% 70%;
+
+  /* Gradients */
+  --gradient-space: linear-gradient(135deg, hsl(250 60% 8%) 0%, hsl(280 50% 12%) 50%, hsl(250 60% 10%) 100%);
+  --gradient-nebula: radial-gradient(ellipse at 30% 20%, hsl(35 80% 30% / 0.3) 0%, transparent 50%),
+                     radial-gradient(ellipse at 70% 80%, hsl(280 60% 30% / 0.3) 0%, transparent 50%);
+  --gradient-button: linear-gradient(135deg, hsl(35 100% 55%) 0%, hsl(25 100% 50%) 100%);
+  --gradient-star: radial-gradient(circle, hsl(280 80% 60%) 0%, hsl(280 60% 35%) 100%);
+  --gradient-number: radial-gradient(circle, hsl(45 100% 70%) 0%, hsl(45 100% 55%) 100%);
+
+  /* Shadows */
+  --shadow-glow: 0 0 30px hsl(35 100% 55% / 0.4);
+  --shadow-card: 0 10px 40px hsl(250 60% 5% / 0.5);
+  --shadow-pawn: 0 4px 12px hsl(250 60% 5% / 0.6);
+
+  /* Apply game background and fonts */
+  background: hsl(var(--background));
+  color: hsl(var(--foreground));
+  font-family: 'Quicksand', sans-serif;
+}
+
+.game-context h1,
+.game-context h2,
+.game-context h3,
+.game-context .game-title {
+  font-family: 'Righteous', cursive;
+}
+
+/* Game component classes */
+.game-context .cosmic-bg {
+  background: var(--gradient-space);
+  position: relative;
+}
+
+.game-context .cosmic-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--gradient-nebula);
+  pointer-events: none;
+}
+
+.game-context .glow-text {
+  text-shadow: 0 0 20px hsl(var(--primary) / 0.6),
+               0 0 40px hsl(var(--primary) / 0.4);
+}
+
+.game-context .star-twinkle {
+  animation: twinkle 3s ease-in-out infinite;
+}
+
+.game-context .hex-space {
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+}
+
+.game-context .pawn-bounce {
+  animation: pawn-bounce 0.6s ease-out;
+}
+
+.game-context .chain-reveal {
+  animation: chain-reveal 0.5s ease-out;
+}
+
+.game-context .pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.game-context .float-gentle {
+  animation: float-gentle 4s ease-in-out infinite;
+}
+
+.game-context .text-shadow-glow {
+  text-shadow: 0 0 10px currentColor;
+}
+
+.game-context .animate-button-pulse {
+  animation: button-pulse 1.5s ease-in-out infinite;
+}
+
+/* Sliding back button tab */
+.game-context .back-tab {
+  position: fixed;
+  left: 0;
+  top: 80px;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  background: hsl(var(--background) / 0.8);
+  backdrop-filter: blur(8px);
+  border: 2px solid hsl(var(--primary) / 0.5);
+  border-left: none;
+  border-radius: 0 8px 8px 0;
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+  transition: all 0.4s ease;
+}
+
+.game-context .back-tab .tab-content {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem;
+  white-space: nowrap;
+}
+
+/* Button reset for tab buttons */
+.game-context .back-tab .tab-expand-btn,
+.game-context .back-tab .tab-collapse-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.125rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* Navigation link styling */
+.game-context .back-tab .tab-nav-link {
+  text-decoration: none;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.game-context .back-tab .tab-nav-link:hover {
+  background: hsl(var(--primary) / 0.1);
+}
+
+/* Collapse button with separator */
+.game-context .back-tab .tab-collapse-btn {
+  border-left: 1px solid hsl(var(--primary) / 0.3);
+  padding-left: 0.5rem;
+  margin-left: 0.25rem;
+}
+
+.game-context .back-tab .tab-collapse-btn:hover {
+  background: hsl(var(--primary) / 0.1);
+  border-radius: 4px;
+}
+
+/* Desktop styles */
+@media (min-width: 641px) {
+  /* Hide mobile-only elements on desktop */
+  .game-context .back-tab .mobile-only {
+    display: none !important;
+  }
+
+  /* Desktop arrow always visible */
+  .game-context .back-tab .tab-arrow {
+    flex-shrink: 0;
+  }
+
+  /* Desktop: nav link hidden by default, shown on hover */
+  .game-context .back-tab .tab-nav-link {
+    max-width: 0;
+    opacity: 0;
+    overflow: hidden;
+    padding: 0;
+  }
+
+  .game-context .back-tab:hover .tab-nav-link {
+    max-width: 150px;
+    opacity: 1;
+    padding: 0.25rem 0.5rem;
+  }
+
+  .game-context .back-tab:hover {
+    box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+    border-color: hsl(var(--primary));
+  }
+}
+
+/* Mobile styles */
+@media (max-width: 640px) {
+  .game-context .back-tab {
+    top: 60px;
+  }
+
+  /* Hide desktop-only elements on mobile */
+  .game-context .back-tab .desktop-only {
+    display: none !important;
+  }
+
+  /* Mobile collapsed: show expand button, hide nav link and collapse button */
+  .game-context .back-tab .tab-nav-link {
+    max-width: 0;
+    opacity: 0;
+    overflow: hidden;
+    padding: 0;
+  }
+
+  .game-context .back-tab .tab-collapse-btn {
+    max-width: 0;
+    opacity: 0;
+    overflow: hidden;
+    padding: 0;
+    border: none;
+    margin: 0;
+  }
+
+  /* Mobile collapsed: minimal width - just the arrow */
+  .game-context .back-tab:not(.expanded) .tab-content {
+    gap: 0;
+    padding: 0.125rem;
+  }
+
+  /* Mobile collapsed: show expand button */
+  .game-context .back-tab:not(.expanded) .tab-expand-btn {
+    display: flex;
+  }
+
+  /* Mobile expanded: hide expand button, show nav link and collapse button */
+  .game-context .back-tab.expanded .tab-expand-btn {
+    display: none;
+  }
+
+  .game-context .back-tab.expanded .tab-nav-link {
+    max-width: 150px;
+    opacity: 1;
+    padding: 0.25rem 0.5rem;
+  }
+
+  .game-context .back-tab.expanded .tab-collapse-btn {
+    max-width: 50px;
+    opacity: 1;
+    padding: 0.25rem;
+    padding-left: 0.5rem;
+    border-left: 1px solid hsl(var(--primary) / 0.3);
+    margin-left: 0.25rem;
+  }
+
+  .game-context .back-tab.expanded {
+    box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+    border-color: hsl(var(--primary));
+  }
+}
+
+/* Stars background effect */
+.game-context .stars {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.game-context .star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: white;
+  border-radius: 50%;
+  opacity: 0.6;
+}
+
+/* Game keyframe animations */
+@keyframes twinkle {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
+
+@keyframes pawn-bounce {
+  0% { transform: translateY(0) scale(1); }
+  30% { transform: translateY(-10px) scale(1.1); }
+  50% { transform: translateY(-15px) scale(1.05); }
+  70% { transform: translateY(-5px) scale(1.02); }
+  100% { transform: translateY(0) scale(1); }
+}
+
+@keyframes chain-reveal {
+  0% { opacity: 0; transform: scale(0.8) rotate(-10deg); }
+  100% { opacity: 1; transform: scale(1) rotate(0deg); }
+}
+
+@keyframes float-gentle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes button-pulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 30px hsl(140 70% 40% / 0.5);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 0 50px hsl(140 70% 40% / 0.8), 0 0 80px hsl(140 70% 40% / 0.4);
+  }
 }
