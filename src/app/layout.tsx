@@ -13,7 +13,7 @@ export const metadata: Metadata = {
       "Portfolio of Devon Clemente, AI Process Automation Specialist. 9+ years transforming operations through intelligent automation.",
     url: "https://devonclemente.com/",
     type: "website",
-    images: [{ url: "/gallery-preview.jpg" }],
+    images: [{ url: "/assets/devonclemente-professional-headshot-ai.png", width: 1024, height: 1024, alt: "Devon Clemente - AI Process Automation Specialist" }],
   },
   twitter: {
     card: "summary_large_image",
@@ -47,7 +47,7 @@ export default function RootLayout({
               name: "Devon Clemente",
               jobTitle: "AI Process Automation Specialist",
               url: "https://devonclemente.com",
-              image: "https://devonclemente.com/gallery-preview.jpg",
+              image: "https://devonclemente.com/assets/devonclemente-professional-headshot-ai.png",
               sameAs: [
                 "https://linkedin.com/in/devonjclemente",
                 "https://x.com/devonclemente",
