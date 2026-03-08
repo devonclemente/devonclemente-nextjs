@@ -1,11 +1,7 @@
-'use client';
-
-import { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ExternalLink, BookOpen, Calendar, Clock } from "lucide-react";
-import { Skeleton } from "@/components/ui/skeleton";
 import cachedArticles from "@/data/blog-cache.json";
 
 interface Article {
@@ -17,45 +13,32 @@ interface Article {
   categories: string[];
 }
 
-const Blog = () => {
-  const [articles, setArticles] = useState<Article[]>(cachedArticles as Article[]);
-  const [loading, setLoading] = useState(cachedArticles.length === 0);
-  const [error, setError] = useState<string | null>(null);
+async function fetchArticles(): Promise<Article[]> {
+  try {
+    const response = await fetch(
+      'https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/@devonclemente',
+      { next: { revalidate: 3600 } }
+    );
+    if (!response.ok) throw new Error('Failed to fetch');
+    const data = await response.json();
+    if (data.status === 'ok') {
+      return data.items.slice(0, 6).map((item: any) => ({
+        title: item.title,
+        link: item.link,
+        pubDate: item.pubDate,
+        description: item.description.replace(/<[^>]*>/g, '').substring(0, 150) + '...',
+        thumbnail: item.thumbnail || item.enclosure?.link,
+        categories: item.categories || []
+      }));
+    }
+    throw new Error('Invalid response');
+  } catch {
+    return cachedArticles as Article[];
+  }
+}
 
-  useEffect(() => {
-    const fetchMediumArticles = async () => {
-      try {
-        const response = await fetch(
-          'https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/@devonclemente'
-        );
-
-        if (!response.ok) throw new Error('Failed to fetch articles');
-
-        const data = await response.json();
-
-        if (data.status === 'ok') {
-          const formattedArticles: Article[] = data.items.slice(0, 6).map((item: any) => ({
-            title: item.title,
-            link: item.link,
-            pubDate: item.pubDate,
-            description: item.description.replace(/<[^>]*>/g, '').substring(0, 150) + '...',
-            thumbnail: item.thumbnail || item.enclosure?.link,
-            categories: item.categories || []
-          }));
-          setArticles(formattedArticles);
-        } else {
-          throw new Error('Invalid response from RSS feed');
-        }
-      } catch (err) {
-        console.error('Error fetching Medium articles:', err);
-        setError('Unable to load articles at this time');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchMediumArticles();
-  }, []);
+const Blog = async () => {
+  const articles = await fetchArticles();
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -68,39 +51,7 @@ const Blog = () => {
     return `${Math.ceil(wordCount / wordsPerMinute)} min read`;
   };
 
-  if (loading) {
-    return (
-      <section className="py-24 bg-gradient-subtle">
-        <div className="container mx-auto px-6">
-          <div className="max-w-7xl mx-auto">
-            <div className="text-center mb-16">
-              <Badge variant="secondary" className="mb-4 px-4 py-2 text-sm font-medium">Latest Articles</Badge>
-              <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
-                Insights & Thoughts<span className="text-primary block">From My Blog</span>
-              </h2>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {[1, 2, 3].map((i) => (
-                <Card key={i} className="overflow-hidden">
-                  <Skeleton className="h-48 w-full" />
-                  <CardHeader>
-                    <Skeleton className="h-6 w-3/4 mb-2" />
-                    <Skeleton className="h-4 w-full" />
-                  </CardHeader>
-                  <CardContent>
-                    <Skeleton className="h-4 w-full mb-2" />
-                    <Skeleton className="h-4 w-2/3" />
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-    );
-  }
-
-  if (error) {
+  if (articles.length === 0) {
     return (
       <section className="py-24 bg-gradient-subtle">
         <div className="container mx-auto px-6">
@@ -109,7 +60,7 @@ const Blog = () => {
             <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
               Insights & Thoughts<span className="text-primary block">From My Blog</span>
             </h2>
-            <p className="text-muted-foreground">{error}</p>
+            <p className="text-muted-foreground">Unable to load articles at this time</p>
           </div>
         </div>
       </section>

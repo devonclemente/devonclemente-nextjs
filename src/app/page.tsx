@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import Header from "@/components/Header";
 import About from "@/components/About";
 import Projects from "@/components/Projects";
@@ -11,7 +12,9 @@ export default function Home() {
       <About />
       <Projects />
       <Games />
-      <Blog />
+      <Suspense fallback={<div className="py-24 text-center text-muted-foreground">Loading articles...</div>}>
+        <Blog />
+      </Suspense>
     </div>
   );
 }
