@@ -6,12 +6,12 @@ export const metadata: Metadata = {
   title: "Devon Clemente - AI Process Automation Specialist",
   description:
     "Portfolio of Devon Clemente, AI Process Automation Specialist. 9+ years transforming operations through intelligent automation with Make.com, UiPath, and AI.",
-  metadataBase: new URL("https://devonclemente.com"),
+  metadataBase: new URL("https://www.devonclemente.com"),
   openGraph: {
     title: "Devon Clemente - AI Process Automation Specialist",
     description:
       "Portfolio of Devon Clemente, AI Process Automation Specialist. 9+ years transforming operations through intelligent automation.",
-    url: "https://devonclemente.com/",
+    url: "https://www.devonclemente.com/",
     type: "website",
     images: [{ url: "/assets/devonclemente-professional-headshot-ai.png", width: 1024, height: 1024, alt: "Devon Clemente - AI Process Automation Specialist" }],
   },
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     site: "@devonclemente",
   },
   alternates: {
-    canonical: "https://devonclemente.com/",
+    canonical: "https://www.devonclemente.com/",
   },
 };
 
@@ -46,8 +46,8 @@ export default function RootLayout({
               "@type": "Person",
               name: "Devon Clemente",
               jobTitle: "AI Process Automation Specialist",
-              url: "https://devonclemente.com",
-              image: "https://devonclemente.com/assets/devonclemente-professional-headshot-ai.png",
+              url: "https://www.devonclemente.com",
+              image: "https://www.devonclemente.com/assets/devonclemente-professional-headshot-ai.png",
               sameAs: [
                 "https://linkedin.com/in/devonjclemente",
                 "https://x.com/devonclemente",
